@@ -1,34 +1,329 @@
+<!DOCTYPE html>
 <html>
-<head>
-  <title>Multiplication Table</title>
-  <script type="text/javascript">
-    var rows = prompt("How many rows for your multiplication table?");
-    var cols = prompt("How many columns for your multiplication table?");
-    if(rows == "" || rows == null)
-   		 rows = 10;
-    if(cols== "" || cols== null)
-   		 cols = 10;
-    createTable(rows, cols);
-    function createTable(rows, cols)
-    {
-      var j=1;
-      var output = "<table border='1' width='500' cellspacing='0'cellpadding='5'>";
-      for(i=1;i<=rows;i++)
-      {
-    	output = output + "<tr>";
-        while(j<=cols)
-        {
-  		  output = output + "<td>" + i*j + "</td>";
-   		  j = j+1;
-   		}
-   		 output = output + "</tr>";
-   		 j = 1;
-    }
-    output = output + "</table>";
-    document.write(output);
-    }
-  </script>
-</head>
-<body>
-</body>
+   <head>
+      <title>Survey</title>
+      <style type="text/css">
+         .container {
+         width: 70%;
+         margin: auto;
+         padding:15px;
+         border: 1px solid black;
+         display: block;
+         }
+         .t-ctr {
+         text-align: center;
+         }
+         p {
+         text-align: center;
+         }
+         .left{
+         float: left;
+         }
+         .right {
+         float: right;
+         }
+         input {
+         font-size: 14px;
+         border: none;
+         border-bottom:1px solid #DCDCDC;
+         width:50%;
+         }
+         .button {
+         background-color: white;
+         border: 1px solid #4CAF50;
+         color: #4CAF50;
+         padding: 15px 32px;
+         text-align: center;
+         text-decoration: none;
+         display: inline-block;
+         font-size: 16px;
+         margin: 4px 2px;
+         cursor: pointer;
+         border-radius: 30px;
+         width: 100%;
+         }
+         .duplicate {
+		    position:fixed;
+		    top: 50%;
+		    left: 50%;
+		    width:30em;
+		    margin-top: -9em; /*set to a negative number 1/2 of your height*/
+		    margin-left: -15em; /*set to a negative number 1/2 of your width*/
+		    background-color: #70f74fab;
+		}
+      </style>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+   </head>
+   <body class="container">
+      <header class="t-ctr" style="color:white;background-image:url(https://ads-survey.s3.amazonaws.com/bg-image.jpeg);" id="header">
+         <h1 style="padding:5px;margin:0;">Good opportunity for people commuting with bike to earn</h1>
+         <h5 style="margin:0;">By completing following survey you can earn &#8377; 15 and refer your friend to earn extra &#8377; 10</h5>
+      </header>
+      <div id="bike-info">
+         <h3 style="margin:5px 0px;text-align:center;">Do you have a bike/motorcycle ?</h3>
+         <table style="width:100%;">
+            <tr>
+               <td style="width:50%;text-align:center;">
+                  <input type="radio" name="myradiogroup1" id="input1" value="YES" style="width:4%;" onclick="handleClick(this)">YES
+               </td>
+               <td style="width:50%;text-align:center;">
+                  <input type="radio" name="myradiogroup1" id="input2" value="NO"style="width:4%;" onclick="handleClick(this)">NO
+               </td>
+            </tr>
+         </table>
+      </div>
+      <div id="not-eligible" style="display:none;">
+         <h3 style="text-align:center;color:pink;">You are not eligible for this survey THANK YOU !!! :)</h3>
+      </div>
+      <div id="thank-you" style="display:none;">
+      	<img src="https://ads-survey.s3.amazonaws.com/thank-you.jpg" style="width:100%;height:100%;"/>
+      </div>
+      <div style="display:none;margin-top:20px;" id="questions">
+         <h3 style="margin:5px 0px;">Name</h3>
+         <br>
+         <input type="text" size="17" placeholder="Enter your name *" id="name">
+         <br>
+         <br>
+         <h3 style="margin:5px 0px;">Bike Registration Number</h3>
+         <br>
+         <input type="text" size="17" placeholder="Registration Number" id="reg-number" style="text-transform:uppercase;">
+         <br>
+         <br>
+         <h3 style="margin:5px 0px;">Where do you stay?</h3>
+         <br>
+         <input type="text" size="17" placeholder="Enter your city name *" id="city">
+         <br>
+         <br>
+         <h3 style="margin:5px 0px;">Are you willing to get paid by displaying adds on your bike? *</h3>
+         <br>
+         <table style="width:100%;">
+            <tr>
+               <td style="width:50%;text-align:center;">
+                  <input type="radio" name="get-paid" id="get-paid" value="true" style="width:4%;" checked>YES
+               </td>
+               <td style="width:50%;text-align:center;">
+                  <input type="radio" name="get-paid" id="get-paid" value="false"style="width:4%;">NO
+               </td>
+            </tr>
+         </table>
+         <br>
+         <br>
+         <h3 style="margin:5px 0px;">How much money do you expect per month?</h3>
+         <br>
+         <input type="radio" name="amount" id="amount" value="150" style="width:4%;" checked>0 - 150 <br><br>                 
+         <input type="radio" name="amount" id="amount" value="300"style="width:4%;">150 - 300 <br><br>
+         <input type="radio" name="amount" id="amount" value="350"style="width:4%;"> > 300
+         <br>
+         <br>
+         <h3 style="margin:5px 0px;">Your daily travelling route</h3>
+         <br>
+         <input type="text" size="17" placeholder="Daily Travelling Route *" id="route">
+         <br>
+         <br>
+         <h3 style="margin:5px 0px;">E-MAIL ID</h3>
+         <br>
+         <input type="text" size="17" placeholder="Enter your email id *" id="email">
+         <br>
+         <br>
+         <h3 style="margin:5px 0px;">Mobile number</h3>
+         <br>
+         +91 <input type="number" size="17" placeholder="Enter your Mobile Number *" id="mobile">
+         <br>
+         <br>
+         <h3 style="margin:5px 0px;">Referral Phone Number</h3>
+         <br>
+         <input type="text" size="17" placeholder="Enter Referral Code" id="referral">
+         <br>
+         <br>
+         <h3 style="margin:5px 0px;">How would you like to get paid?</h3>
+         <br>
+         <input type="radio" name="payment" id="payment" value="TEZ" style="width:4%;">TEZ<br><br>                 
+         <input type="radio" name="payment" id="payment" value="PHONEPAY"style="width:4%;">PHONEPAY<br><br>
+         <br>
+         <br>
+         <br>
+         <div style="width:25%;margin:auto;">
+         <button class="button" id="submit" onclick="submit()">SUBMIT</button>
+         </div>
+         <p style="color:red;font-size:12px;">* marked fields are mandatory</p>
+      </div>
+
+
+      <div id="footer-otp" style="display:none;text-align:center;">
+      	<h5 style="margin:5px 0px;" id="new-code"></h5><br>
+      	<h3 style="margin:5px 0px;">Please enter OTP to verify your number</h3><br>
+      	<input type="text" size="17" placeholder="Enter OTP" id="OTP" style="text-align:center"><br><br>
+      	<div style="width:25%;margin:auto;">
+         <button class="button" onclick="verify()" id="verify">VERIFY OTP</button>
+         </div>
+         <div style="width:50%;margin:auto;margin-bottom:15px;"><a href="#" onclick="editNumber()" style="float:left">Change Number</a>
+         	<a href="" onclick="reset()" style="float:right;">Reset All</a></div>
+      </div>
+      </div>
+      
+      <div class="duplicate" id="duplicate" style="display:none;">
+      	<h3 style="text-align:center;">You have already taken this survey!!! Thank You :)</h3>
+      <script type="text/javascript">
+         window.onload = function() {
+         	if (localStorage.survey && localStorage.survey.indexOf('SURVEY')!=-1) {
+         	   document.getElementById('footer-otp').style.display = 'none';
+               document.getElementById('questions').style.display = 'none';
+               document.getElementById('bike-info').style.display = 'none';
+               document.getElementById('header').style.display = 'none';
+				   document.getElementById('thank-you').style.display = 'none';
+				   document.getElementById('duplicate').style.display = 'block';
+				   document.body.style.border = 'none';
+         	};
+         $.get("http://ipinfo.io", function(response) {
+          if(response.city) {
+          	document.getElementById('city').value = response.city;	
+          }
+         }, "jsonp");
+         };
+
+         var request;
+         var newReferalCode = '';
+         var deviceId = 'SURVEY-';
+         var baseUrl = 'http://13.127.95.137:19050/';
+            function handleClick(myRadio) {
+            	if(myRadio.value == 'YES') {
+            		document.getElementById('questions').style.display = 'block';
+            		document.getElementById('bike-info').style.display = 'none';
+            	} else if(myRadio.value == 'NO') {
+            		document.getElementById('not-eligible').style.display = 'block';
+            		document.getElementById('bike-info').style.display = 'none';
+            	}
+            }
+         
+            function submit() {
+            	var mobile = document.getElementById('mobile').value;
+            	if(mobile && mobile.length != 10) {
+            		alert('Mobile Number should 10 Digits');
+            		return;
+            	}
+            	
+				var possible = "ABCDEFGHIJKLMNPQRSTUVWXYZ123456789";
+				if(!newReferalCode) {
+					for (var i = 0; i < 5; i++)
+					newReferalCode += possible.charAt(Math.floor(Math.random() * possible.length));	
+				}
+            newReferalCode = mobile;
+			for (var i = 0; i < 10; i++)
+				deviceId += possible.charAt(Math.floor(Math.random() * possible.length));
+
+            	request = {
+				  "city": document.getElementById('city').value,
+				  "daily_travel_route": document.getElementById('route').value,
+				  "device_uuid": deviceId,
+				  "display_ads_on_bike": $('input[name="get-paid"]:checked').val(),
+				  "email": document.getElementById('email').value,
+				  "expected_money": $('input[name="amount"]:checked').val(),
+				  "name": document.getElementById('name').value,
+				  "number": mobile,
+				  "referer_code": document.getElementById('referral').value,
+				  "referral_code": newReferalCode,
+				  "reg_number": document.getElementById('reg-number').value,
+  				  "payment_mode": $('input[name="payment"]:checked').val()
+				};
+            	
+            	if(!request.city || !request.daily_travel_route || !request.expected_money || !request.email || !request.number || !request.payment_mode || !request.name) {
+            		alert('* marked fields are mandatory');
+            		return;
+            	}
+               if(request.referer_code == request.number) {
+                  request.referer_code = '';
+               }
+            	document.getElementById('new-code').innerHTML = 'You can refer others by using <h2>'+newReferalCode+'</h2>';
+            	            	$("#questions").css({ opacity: 0.3 });
+            	$("#questions :input").attr("disabled", true); 
+            	document.getElementById('submit').style.display = 'none';
+            	document.getElementById('header').style.display = 'none';
+
+            	var xhr = new XMLHttpRequest();
+				xhr.open("GET", baseUrl+"contact/"+request.number, true);
+				xhr.onreadystatechange = function () {
+				    if (xhr.readyState === 4) {
+				    	if(xhr.status === 200) {
+					        document.getElementById('footer-otp').style.display = 'block';
+					        alert('You have successfully submitted your details. Your reward will be creditted within 24 hours... Thank you!!!');	
+				    	}
+				    	if(xhr.status === 400) {
+				    		var response = JSON.parse(xhr.response);
+				    		if(response.message.indexOf('Already Present')==0) {
+				    		localStorage.survey = deviceId;
+					    		document.getElementById('footer-otp').style.display = 'none';
+				            document.getElementById('questions').style.display = 'none';
+				            document.getElementById('bike-info').style.display = 'none';
+				            document.getElementById('header').style.display = 'none';
+								document.getElementById('thank-you').style.display = 'none';
+								document.getElementById('duplicate').style.display = 'block';
+								document.body.style.border = 'none';	
+				    		}				    		
+				    	} else if(xhr.status > 400) {
+				    		document.getElementById('questions').style.display = 'none';
+				    		alert('Some error has occured.Please try after some time.');
+				    	}
+				    }
+				};
+				xhr.send();
+            }
+
+            function editNumber() {
+            	document.getElementById('footer-otp').style.display = 'none';
+            	$("#questions").css({ opacity: 1 });
+            	$("#questions :input").attr("disabled", false);
+            	document.getElementById('submit').style.display = 'block';
+            }
+
+            function reset() {
+            	document.location.reload(true);
+            }
+
+            function verify() {
+            	var otp = document.getElementById('OTP').value;
+            	if(!otp) {
+            		alert('Please Enter OTP');
+            		return;
+            	}
+            	request.otp = otp;
+
+            	var xhr = new XMLHttpRequest();
+				xhr.open("POST", baseUrl+"contact", true);
+				xhr.setRequestHeader("Content-type", "application/json");
+				xhr.onreadystatechange = function () {
+				    if (xhr.readyState === 4) {
+				    	if(xhr.status === 200) {
+					        document.getElementById('footer-otp').style.display = 'none';
+			            	document.getElementById('questions').style.display = 'none';
+							document.getElementById('thank-you').style.display = 'block';
+							localStorage.survey = deviceId;
+				    	}
+				    	if(xhr.status > 400) {
+				    		var response = JSON.parse(xhr.response);
+				    		if(response.message.indexOf('Already Present')==0) {
+				    		localStorage.survey = deviceId;
+					    		document.getElementById('footer-otp').style.display = 'none';
+				            document.getElementById('questions').style.display = 'none';
+				            document.getElementById('bike-info').style.display = 'none';
+				            document.getElementById('header').style.display = 'none';
+								document.getElementById('thank-you').style.display = 'none';
+								document.getElementById('duplicate').style.display = 'block';
+								document.body.style.border = 'none';	
+				    		}
+				    	}
+                  if(xhr.status == 400) {
+                     var response = JSON.parse(xhr.response);
+                     if(response.message.indexOf('Invalid OTP')==0) {
+                        alert('Invalid OTP');
+                        document.getElementById('submit').style.display = 'none';
+                        document.getElementById('header').style.display = 'none';
+                        document.getElementById('footer-otp').style.display = 'block';
+                     }                    
+                  }
+				    }
+				};
+				xhr.send(JSON.stringify(request));
+            }
+      </script>
+   </body>
 </html>
